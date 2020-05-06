@@ -1,0 +1,27 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 8,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "env": {
+    "node": true,
+    "browser": true
+  },
+  "plugins": ["react", "prettier"],
+  "extends": [
+    // "standard",
+    "prettier",
+    "prettier/react",
+    "prettier/standard"
+  ],
+  "rules": {
+    // 根据自身需求覆盖推荐的配置
+    // "no-console": 1,
+    "react/jsx-uses-react": 2,
+    "react/jsx-uses-vars": 2
+  }
+}

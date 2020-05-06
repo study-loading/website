@@ -1,0 +1,13 @@
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.scrolling {
+  -webkit-overflow-scrolling: touch;
+}
+
+.scrolling::-webkit-scrollbar {
+  display: none;
+}
