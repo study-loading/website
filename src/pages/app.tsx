@@ -3,9 +3,10 @@
  * @Author: WangYong
  * @Date: 2019-11-14 23:56:46
  * @LastEditor: WangYong
- * @LastEditTime: 2019-11-17 21:40:45
+ * @LastEditTime: 2020-05-06 23:33:05
  */
 import React from 'react'
+import DragonGirl from 'components/live2d/dragonGirl'
 import Routers from './router'
 
 import 'styles/bootstrap-reboot.css'
@@ -15,7 +16,8 @@ class App extends React.Component {
   render() {
     return (
       <div className="entry">
-         <Routers />
+        <DragonGirl />
+        <Routers />
       </div>
     )
   }

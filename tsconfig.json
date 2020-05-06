@@ -66,6 +66,6 @@
     // "emitDecoratorMetadata": true,         /* Enables experimental support for emitting type metadata for decorators. */
     "skipLibCheck": true
   },
-  "include": ["src/**/*.ts", "src/pages/home/index.tsx"],
+  "include": ["src/**/*.ts", "src/pages/home/index.tsx", "src/pages/router.tsx", "src/pages/app.tsx", "src/index.tsx"],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }

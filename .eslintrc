@@ -11,6 +11,9 @@
     "node": true,
     "browser": true
   },
+  "globals": {
+    "loadlive2d": true
+  },
   "plugins": ["react", "prettier"],
   "extends": [
     // "standard",

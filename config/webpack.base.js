@@ -2,10 +2,12 @@ const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
 // const PreloadWebpackPlugin = require('preload-webpack-plugin')
 
 const devMode = process.env.NODE_ENV !== 'production'
 const srcPath = path.resolve(__dirname, '../src')
+const outputPath = path.resolve(__dirname, '../dist')
 
 let config = {
   entry: {
@@ -13,7 +15,7 @@ let config = {
   },
   context: srcPath,
   output: {
-    path: path.resolve(__dirname, '../dist'),
+    path: outputPath,
     filename: 'js/' + (devMode ? '[name]_[hash:8].js' : '[name]_[chunkhash:8].js'),
     chunkFilename: 'chunks/[name]_[chunkhash:8].js',
     publicPath: '/',
@@ -23,6 +25,7 @@ let config = {
       components: `${srcPath}/components/`,
       pages: `${srcPath}/pages/`,
       utils: `${srcPath}/utils/`,
+      assets: `${srcPath}/assets`,
       styles: `${srcPath}/styles`,
       api: `${srcPath}/api/`,
     },
@@ -63,7 +66,7 @@ let config = {
           },
         ],
         exclude: [
-          path.resolve(__dirname, `${srcPath}/lib`),
+          path.resolve(__dirname, `/lib`),
           path.resolve(__dirname, '../node_modules'),
         ]
       },
@@ -141,6 +144,10 @@ let config = {
       favicon: './favicon.ico',
       chunks: ['app', 'commons', 'vendors', 'init'],
     }),
+    new CopyPlugin([
+      { from: `${srcPath}/lib`, to: `${outputPath}/lib` },
+      { from: `${srcPath}/assets`, to: `${outputPath}/assets` },
+    ]),
     // new PreloadWebpackPlugin(),
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
