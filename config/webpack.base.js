@@ -16,7 +16,7 @@ let config = {
   context: srcPath,
   output: {
     path: outputPath,
-    filename: 'js/' + (devMode ? '[name]_[hash:8].js' : '[name]_[chunkhash:8].js'),
+    filename: devMode ? 'js/[name]_[hash:8].js' : 'js/[name]_[chunkhash:8].js',
     chunkFilename: 'chunks/[name]_[chunkhash:8].js',
     publicPath: '/',
   },
@@ -26,6 +26,7 @@ let config = {
       pages: `${srcPath}/pages/`,
       utils: `${srcPath}/utils/`,
       assets: `${srcPath}/assets`,
+      plugins: `${srcPath}/plugins`,
       styles: `${srcPath}/styles`,
       api: `${srcPath}/api/`,
     },
@@ -147,6 +148,7 @@ let config = {
     new CopyPlugin([
       { from: `${srcPath}/lib`, to: `${outputPath}/lib` },
       { from: `${srcPath}/assets`, to: `${outputPath}/assets` },
+      { from: `${srcPath}/plugins/sw/setup.js`, to: `${outputPath}/sw.js` },
     ]),
     // new PreloadWebpackPlugin(),
     new MiniCssExtractPlugin({

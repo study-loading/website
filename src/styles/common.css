@@ -1,7 +1,28 @@
-.ellipsis {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+html {
+  user-select: none;
+}
+
+body {
+  min-height: 100vh;
+  background-color: #fe9d10;
+
+  /* background-color: #fff; */
+}
+
+button {
+  background-color: transparent;
+  appearance: none;
+}
+
+img,
+a {
+  /* 控制元素在移动设备上是否使用滚动回弹效果. */
+  -webkit-touch-callout: none;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
 }
 
 .scrolling {
@@ -10,4 +31,15 @@
 
 .scrolling::-webkit-scrollbar {
   display: none;
+}
+
+.middle {
+  white-space: nowrap;
+}
+
+.middle::after {
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  content: '';
 }

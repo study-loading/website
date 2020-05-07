@@ -4,9 +4,9 @@ import './index.scss'
 
 class Live2dDragon extends React.Component {
     componentDidMount() {
-        loadlive2d("live2d", "./assets/live2d/dragonGirl/model/tia/model.json");
-        // var message_Path = './live2d/'
-        // var home_Path = 'https://haremu.com/'
+      loadlive2d("live2d", "./assets/live2d/dragonGirl/model/tia/model.json");
+      // var message_Path = './live2d/'
+      // var home_Path = 'https://haremu.com/'
     }
   render() {
     return (
@@ -18,4 +18,3 @@ class Live2dDragon extends React.Component {
 }
 
 export default Live2dDragon
-
