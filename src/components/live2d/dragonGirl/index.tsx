@@ -11,7 +11,7 @@ class Live2dDragon extends React.Component {
   render() {
     return (
       <div className="live2d-dragon">
-        <canvas id="live2d" width="560" height="500" className="live2d"></canvas>
+        <canvas id="live2d" width="280" height="250" className="live2d"></canvas>
       </div>
     )
   }
