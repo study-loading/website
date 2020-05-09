@@ -148,7 +148,6 @@ let config = {
     new CopyPlugin([
       { from: `${srcPath}/lib`, to: `${outputPath}/lib` },
       { from: `${srcPath}/assets`, to: `${outputPath}/assets` },
-      { from: `${srcPath}/plugins/sw/setup.js`, to: `${outputPath}/sw.js` },
     ]),
     // new PreloadWebpackPlugin(),
     new MiniCssExtractPlugin({
