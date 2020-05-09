@@ -2,9 +2,7 @@ import React from 'react'
 // import classnames from 'classnames'
 import './style.scss'
 
-const playList = [
-  './assets/video/magicgirl.mp4',
-]
+const playList = []
 
 class Video extends React.Component {
   state = {
@@ -13,7 +11,7 @@ class Video extends React.Component {
   render() {
     return (
       <div className="videoPlayer">
-        <video className="video-player" autoPlay loop muted src={playList[this.state.played]} />
+        {/* <video className="video-player" autoPlay loop muted src={playList[this.state.played]} /> */}
       </div>
     )
   }
