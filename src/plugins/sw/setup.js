@@ -3,7 +3,7 @@
  * @Author: wangYong
  * @Date: 2020-05-06 13:35:43
  * @LastEditors: wangYong
- * @LastEditTime: 2020-05-06 18:39:56
+ * @LastEditTime: 2020-05-09 12:11:34
  */
 
 // config
@@ -23,14 +23,20 @@ const staticMIMEType = [
   'text/',
   'image/',
   'application/javascript',
+  // 有的接口也是走json
   'application/json',
   'font/'
+]
+
+const staticEndFix = [
+  'mtn',
+  'moc'
 ]
 
 const cacheManager = {
   remove(name, fn) {
     if (fn) {
-      caches.open(name).then(function (cache) {
+      return caches.open(name).then(function (cache) {
         return cache.keys().then(key => {
           if (fn(key)) {
             cache.delete(key).then(() => {
@@ -42,7 +48,7 @@ const cacheManager = {
         })
       })
     } else {
-      caches.delete(name).then(() => {
+      return caches.delete(name).then(() => {
         console.log(name + ' is remove')
       }).catch(err => {
         console.log(name + ' remove failed')
@@ -50,18 +56,16 @@ const cacheManager = {
     }
   },
   removeAll() {
-    caches.keys().then(keys => {
-      keys.forEach((key) => {
-        this.remove(key)
-      })
+    return caches.keys().then(keys => {
+      return Promise.all(keys.map(key => this.remove(key)))
     })
   },
   add(name, req, res) {
     caches.open(name).then(cache => {
       cache.put(req, res).then(() => {
-        console.log('added '+ name + ' cache')
+        console.log('added ' + name + ' cache')
       }).catch(err => {
-        console.log('add '+ name + ' cache failed')
+        console.log('add ' + name + ' cache failed')
       })
     })
   },
@@ -76,7 +80,7 @@ const cacheManager = {
 }
 
 // 预先请求的资源在失败时会导致register失败
-function prefectchAssets() {
+function preFetchAssets() {
   for (let name in config) {
     cacheManager.preload(name, config[name])
   }
@@ -87,7 +91,7 @@ function install() {
   self.addEventListener('install', function (event) {
     // 直接接管上一个sw
     self.skipWaiting()
-    // event.waitUntil(prefectchAssets())
+    // event.waitUntil(preFetchAssets())
   })
 }
 
@@ -127,11 +131,10 @@ function handleRequestCache(req, res) {
 }
 
 function canCacheFile(req, res) {
-  if (!res || (res.status !== 200 && res.status !== 304) || res.type !== 'basic') {
-    console.log(res)
+  if (!res || (res.status !== 200 && res.status !== 304) || res.type !== 'basic' || req.method.toUpperCase() !== 'GET') {
     return false
   }
-  if (isStaticFile(req, res)) {
+  if (isStaticFile(req, res) || staticEndFix.indexOf(getFileEndFix(req.url)) !== -1) {
     return true
   }
   return false
@@ -152,6 +155,12 @@ function isLocalSource(req) {
   return url.host === location.host
 }
 
+function getFileEndFix(path) {
+  let url = new URL(path)
+  let matched = /.(\w+)$/g.exec(url.pathname)
+  return matched ? matched[1] : ''
+}
+
 function setup() {
   install()
   activate()
@@ -160,9 +169,6 @@ function setup() {
 
 setup()
 
-// caches.open(htmlCacheName).then(cache => {
-//   cache.delete()
-// })
 // sw应该只缓存静态资源，对于动态资源不要缓存，应该sw无法判断缓存的资源什么时候会更新，无法判断缓存是否可用的包括远程资源、
 // 对于文件名未发生改变的资源，sw只能清除所有缓存再重新请求，比如未带hash资源和远程资源
 // 对于webpack带hash的资源，更新后能够缓存最新的资源，但是不能清除旧的资源，因为无法判断旧的资源是否还被使用
